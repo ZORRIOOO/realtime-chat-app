@@ -1,4 +1,4 @@
-require('dotnev').config()
+require('dotenv').config()
 
 module.exports = {
   "development": {
