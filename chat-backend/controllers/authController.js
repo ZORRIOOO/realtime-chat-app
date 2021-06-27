@@ -8,7 +8,7 @@ exports.login = async (req, res) => {
 
     try {
 
-        const secretKey = require('crypto').randomBytes(64).toString('hex')
+        //const secretKey = require('crypto').randomBytes(64).toString('hex')
 
         // найти пользователя с таким адресом
         const user = await User.findOne({
@@ -30,13 +30,9 @@ exports.login = async (req, res) => {
     } catch (e) {
         return res.status(500).json({ message: e.message })
     }
-
-
-    return res.send([email, password])
 }
 
 exports.register = async (req, res) => {
- 
     try {
         const user = await User.create(req.body)
 
