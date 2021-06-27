@@ -11,7 +11,7 @@ const Navbar = () => {
         <div id='navbar' className='card-shadow'>
             <h2>Чат</h2>
             <div id='profile-menu'>
-                <img src='' alt='Avatar'/>
+                <img width='40' height='40' src={user.avatar} alt='Avatar'/>
                 <p>{user.firstName} {user.lastName}</p>
             </div>
         </div>
