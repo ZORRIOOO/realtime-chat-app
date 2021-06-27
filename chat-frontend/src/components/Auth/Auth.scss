@@ -10,17 +10,31 @@
 
         & > div {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             min-width: 500px;
-            margin-top: 2.5rem;
+            margin-top: 10px;
             background-color: white;
             border-radius: 20px;
+
+            @media (min-width: 800px) {
+                flex-direction: row;
+                min-width: 500px;
+                margin-top: 2.5rem;
+
+            }
 
             #image-section {
                 background-color: $bg-alter;
                 border-top-left-radius: 20px;
-                border-bottom-left-radius: 20px;
+                border-top-right-radius: 20px;
+                border-bottom-left-radius: 0;
                 padding: 20px;
+
+                @media (min-width: 800px) {
+                    border-top-right-radius: 0;
+                    border-bottom-left-radius: 20px;
+
+                }
                 
                 // Для центрирования по верт./гор. изображения
                 display: flex;
@@ -29,12 +43,16 @@
 
                 img {
                     max-height: 300px;
-                    min-width: 100%;
+                    max-width: 100%;
                 }
             }
 
             #form-section {
-                min-width: 300px;
+                min-width: 100%;
+
+                @media (min-width: 800px) {
+                    min-width: 300px;
+                }
 
                 h2 {
                     text-align: center;
