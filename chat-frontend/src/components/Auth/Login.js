@@ -1,10 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import loginImage from '../../assets/images/login.svg';
 import { Link } from 'react-router-dom';
- 
+//import axios from 'axios'; 
+import AuthService from '../../services/authService';
+
 import './Auth.scss'
 
 const Login = () => {
+
+    const [email, setEmail] = useState('max.schneider@gmail.com')
+    const [password, setPassword] = useState('secret')
+    
+    const submitForm = (e) => {
+        e.preventDefault()
+
+
+        AuthService.login({ email, password }).then(res => console.log(res))
+        /* axios.post('http://127.0.0.1:3000/login', { email, password })
+            .then(res => {
+                console.log('res', res);
+            })
+            .catch(err => {
+                console.log('err', err);
+            }) */
+
+
+        console.log({ email, password });
+    }
+
     return (
         <div id='auth-container'>
             <div id='auth-card'>
@@ -16,13 +39,23 @@ const Login = () => {
                     <div id='form-section'>
                         <h2>Добро пожаловать</h2>
 
-                        <form>
+                        <form onSubmit={submitForm}>
                             <div className='input-field mb-1'>
-                                <input placeholder='Почта' />
+                                <input 
+                                onChange={e => setEmail(e.target.value)}
+                                value={email}
+                                required='requierd'
+                                type='text'
+                                placeholder='Почта' />
                             </div>  
 
                             <div className='input-field mb-2'>
-                                <input placeholder='Пароль' />
+                                <input 
+                                onChange={e => setPassword(e.target.value)}
+                                value={password}
+                                required='requierd'
+                                type='password'
+                                placeholder='Пароль' />
                             </div>  
 
                             <button>Войти</button>
