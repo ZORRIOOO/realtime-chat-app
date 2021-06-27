@@ -1,11 +1,15 @@
 const User = require('../models').User;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const config = require('../config/app')
 
 exports.login = async (req, res) => {
     const { email, password } = req.body
 
     try {
+
+        const secretKey = require('crypto').randomBytes(64).toString('hex')
+
         // найти пользователя с таким адресом
         const user = await User.findOne({
             where: {
@@ -32,15 +36,23 @@ exports.login = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
-    
+ 
+    try {
+        const user = await User.create(req.body)
+
+        const userWithToken = generateToken(user.get({ raw: true }))
+        return res.send(userWithToken)
+    } catch (e) {
+        return res.status(500).json({ message: e.message })
+    }
+
 }
 
 const generateToken = (user) => {
-    console.log(user);
 
-    delete user.password
+    //    delete user.password
 
-    const token = jwt.sign(user, 'password', { expiresIn: 86400 })
+    const token = jwt.sign(user, config.appKey, { expiresIn: 86400 })
 
     return { ...user, ...{ token } }
 }
