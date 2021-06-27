@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import registerImage from '../../assets/images/register.svg';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {register} from '../../store/actions/auth';
  
 import './Auth.scss'
-const Register = () => {
+const Register = ({ history }) => {
+
+    const dispatch = useDispatch()
+
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [email, setEmail] = useState('')
+    const [gender, setGender] = useState('male')
+    const [password, setPassword] = useState('')
+
+    const submitForm = (e) => {
+        e.preventDefault()
+
+        dispatch(register({ firstName, lastName, email, gender, password }, history))
+    }
+
     return (
         <div id='auth-container'>
             <div id='auth-card'>
@@ -15,21 +32,39 @@ const Register = () => {
                     <div id='form-section'>
                         <h2>Новый аккаунт</h2>
 
-                        <form>
+                        <form onSubmit={submitForm}>
                             <div className='input-field mb-1'>
-                                <input placeholder='Имя' />
+                                <input 
+                                onChange={e => setFirstName(e.target.value)}
+                                value={firstName}
+                                required='requierd'
+                                type='text'
+                                placeholder='Имя' />
                             </div> 
 
                             <div className='input-field mb-1'>
-                                <input placeholder='Фамилия' />
+                                <input 
+                                onChange={e => setLastName(e.target.value)}
+                                value={lastName}
+                                required='requierd'
+                                type='text'
+                                placeholder='Фамилия' />
                             </div> 
 
                             <div className='input-field mb-1'>
-                                <input placeholder='Почта' />
+                                <input 
+                                onChange={e => setEmail(e.target.value)}
+                                value={email}
+                                required='requierd'
+                                type='text'
+                                placeholder='Почта' />
                             </div>  
 
                             <div className='input-field mb-1'>
-                                <select>
+                                <select
+                                onChange={e => setGender(e.target.value)}
+                                value={gender}
+                                required='requierd'>
                                     <option value='male'>Мужчина</option>
                                     <option value='female'>Женщина</option>
                                     <option value='other'>Другой</option>
@@ -37,7 +72,12 @@ const Register = () => {
                             </div> 
 
                             <div className='input-field mb-2'>
-                                <input placeholder='Пароль' />
+                                <input 
+                                onChange={e => setPassword(e.target.value)}
+                                value={password}
+                                required='requierd'
+                                type='password'
+                                placeholder='Пароль' />
                             </div>  
 
                             <button>Создать</button>
