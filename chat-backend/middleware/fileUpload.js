@@ -32,7 +32,7 @@ exports.userFile = ((req, res, next) => {
 
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            const {id} = req.user
+            const { id } = req.user
             const dest = `uploads/user/${id}`
 
             fs.access(dest, (error) => {

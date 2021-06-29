@@ -37,7 +37,7 @@ const AuthService = {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }
         return API.post('/users/update', data, headers)
-            .then(({data}) => {
+            .then(({ data }) => {
                 localStorage.setItem('user', JSON.stringify(data))
                 return data
             })
