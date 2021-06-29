@@ -1,7 +1,13 @@
 const User = require('../models').User;
 const sequelize = require('sequelize');
 
-exports.update = async (req, res) => {
+exports.update = async (req, res) => { 
+
+    if (req.file) {
+        req.body.avatar = req.file.filename
+    }
+
+    if (typeof req.body.avatar !== 'undefined' && req.body.avatar.length === 0) delete req.body.avatar
 
     try {   
 
@@ -24,6 +30,4 @@ exports.update = async (req, res) => {
     } catch (e) {
         return res.status(500).json({ error: e.message })
     }
-
-    return res.send('User controller')
 }

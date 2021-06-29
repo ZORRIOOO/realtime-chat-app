@@ -13,8 +13,8 @@ const Login = ({ history }) => {
 
     const dispatch = useDispatch()
 
-    const [email, setEmail] = useState('max.schneider@gmail.com')
-    const [password, setPassword] = useState('secret')
+    const [email, setEmail] = useState('john.doe@gmail.com')
+    const [password, setPassword] = useState('password')
     
     const submitForm = (e) => {
         e.preventDefault()
