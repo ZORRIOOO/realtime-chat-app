@@ -1,4 +1,4 @@
-import { LOGIN, REGISTER, LOGOUT } from '../actions/auth';
+import { LOGIN, REGISTER, LOGOUT, UPDATE_PROFILE } from '../actions/auth';
 
 const initialState = {
     user: JSON.parse(localStorage.getItem('user')) || {},
@@ -31,6 +31,11 @@ const authReducer = (state = initialState, action) => {
                 user: {},
                 token: '',
                 isLoggedIn: false
+            }
+        case UPDATE_PROFILE:
+            return {
+                ...state,
+                user: payload
             }
         default: {
             return state

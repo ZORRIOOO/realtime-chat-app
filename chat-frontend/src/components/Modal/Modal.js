@@ -8,17 +8,16 @@ const Modal = (props) => {
             if (child.key === name) return child
         })
 
-        const closeModal = (e) => {
-            e.stopPropagation()
+    const closeModal = (e) => {
+        e.stopPropagation()
 
-            if (e.target.classList.contains('modal-close')) {
-                return props.click()
-            }
-
+        if (e.target.classList.contains('modal-close')) {
+            return props.click()
         }
+    }
 
     return (
-        <div className='modal-mask modal-close'  onClick={closeModal}>
+        <div className='modal-mask modal-close' onClick={closeModal}>
             <div className='modal-wrapper'>
                 <div className='modal-container'>
 
