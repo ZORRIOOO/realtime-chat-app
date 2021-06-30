@@ -81,7 +81,7 @@ exports.create = async (req, res) => {
               userId: partnerId
             }
         ], { transaction: t })
-        
+
         await t.commit()
 
         const chatNew = await Chat.findOne({
@@ -103,7 +103,7 @@ exports.create = async (req, res) => {
             ]
         })
 
-        return res.send(chatNew)
+        return res.json(chatNew)
 
     } catch (e) {
         await t.rollback()
@@ -111,3 +111,34 @@ exports.create = async (req, res) => {
     }
 
 }
+
+exports.messages = async (req, res) => {
+
+    const limit = 10
+    const page = req.query.page || 1
+    const offset = page > 1 ? page * limit : 0
+
+    const messages = await Message.findAndCountAll({
+        where: {
+            chatId: req.query.id
+        },
+        limit,
+        offset
+    })
+
+    const totalPages = Math.ceil(messages.count / limit)
+
+    if (page > totalPages) return res.json({ data: { messages: [] } })
+
+    const result = {
+        messages: messages.rows,
+        pagination: {
+            page,
+            totalPages
+        }
+    }
+
+    return res.json(result)
+
+}
+
