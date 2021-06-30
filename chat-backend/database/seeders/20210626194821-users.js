@@ -19,21 +19,21 @@ module.exports = {
         firstName: 'Max',
         lastName: 'Schneider',
         email: 'max.schneider@gmail.com',
-        password: bcrypt.hashSync('secret', 10),
+        password: bcrypt.hashSync('password', 10),
         gender: 'male'
       },
       {
         firstName: 'Sam',
         lastName: 'Schneider',
         email: 'sam.schneider@gmail.com',
-        password: 'password',
+        password: bcrypt.hashSync('password', 10),
         gender: 'male'
       },
       {
         firstName: 'Ann',
         lastName: 'Robbie',
         email: 'ann.robbie@gmail.com',
-        password: 'password',
+        password: bcrypt.hashSync('password', 10),
         gender: 'female'
       },
     ])

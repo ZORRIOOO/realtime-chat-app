@@ -22,5 +22,3 @@ const port = config.appPort
 app.listen(port, () => {
     console.log(`Сервер запущен на порту ${port}`);
 })
-
-console.log('!');
