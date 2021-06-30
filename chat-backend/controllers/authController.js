@@ -24,7 +24,7 @@ exports.login = async (req, res) => {
         // Проверить, если пароли совпадают
         if (!bcrypt.compareSync(password, user.password)) return res.status(401).json({ message: 'Неверный пароль!' })
         
-        // Сгенерировать token   для этого пользователя
+        // Сгенерировать token для этого пользователя
         const userWithToken = generateToken(user.get({ raw: true }))
         userWithToken.user.avatar = user.avatar
         return res.send(userWithToken)

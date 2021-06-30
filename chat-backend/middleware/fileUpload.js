@@ -19,7 +19,7 @@ exports.userFile = ((req, res, next) => {
     const fileFilter = (req, file, cb) => {
         const extension = getFileType(file)
 
-        const allowedType = /jpeg|jpg|png/
+        const allowedType = /svg|jpeg|jpg|png/
 
         const passed = allowedType.test(extension)
 
