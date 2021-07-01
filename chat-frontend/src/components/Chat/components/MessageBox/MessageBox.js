@@ -1,9 +1,26 @@
 import React from 'react';
-import '../../components/MessageBox/MessageBox.scss';
+import { useSelector } from 'react-redux';
+import Message from '../Message/Message';
+import './MessageBox.scss';
 
-const MessageBox = () => {
+const MessageBox = ({ chat }) => {
+
+    const user = useSelector(state => state.authReducer.user)
+
     return (
-        <h3>Message Box</h3>
+        <div id='msg-box'>
+            {
+                chat.Messages.map((message, index) => {
+                    return <Message 
+                        user={user}
+                        chat={chat}
+                        message={message}
+                        index={index}
+                        key={message.id}
+                    />
+                })
+            }
+        </div>
     )
 }
 
