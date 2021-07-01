@@ -20,5 +20,21 @@
     .chatter-status {
         display: flex;
         align-items: center;
+
+        .online-status {
+            display: inline-block;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+        }
+     
+        .online {
+            background-color: $success;
+        }
+     
+        .offline {
+            background-color: $danger;
+        }
+
     }
 }
