@@ -3,7 +3,7 @@ import './Messenger.scss';
 
 const Messenger = () => {
     return (
-        <h1>Переписка</h1>
+        <h1>Месседжер</h1>
     )
 }
 
