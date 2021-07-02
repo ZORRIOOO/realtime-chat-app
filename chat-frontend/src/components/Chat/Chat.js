@@ -16,10 +16,10 @@ const Chat = () => {
 
     useSocket(user, dispatch)
 
-    useEffect(() => {
+    /* useEffect(() => {
         dispatch(fetchChats()).then(res => console.log(res)).catch(err => console.log(err))
 
-    }, [dispatch])
+    }, [dispatch]) */
 
     return (
         <div id='chat-container'>
