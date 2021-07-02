@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './MessageInput.scss';
 
-const MessageInput = () => {
+const MessageInput = ({ chat }) => {
 
     const user = useSelector(state => state.authReducer.user)
-
+    const socket = useSelector(state => state.chatReducer.socket)
     const [message, setMessage] = useState('')
     const [image, setImage] = useState('')
 
@@ -29,9 +29,9 @@ const MessageInput = () => {
         
         const msg = {
             type: imageUpload ? 'image' : 'text',
-            fromUserId: user.id,
-            //toUserId: chat.Users.map(user => user.id),
-            //chatId: chat.id,
+            fromUser: user,
+            toUserId: chat.Users.map(user => user.id),
+            chatId: chat.id,
             message: imageUpload ? image : message
         }
 
@@ -39,6 +39,7 @@ const MessageInput = () => {
         setImage('')
 
         // Отправть сообщение с помощью Socket
+        socket.emit('message', msg)
 
     }
 
