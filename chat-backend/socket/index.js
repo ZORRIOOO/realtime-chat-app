@@ -77,10 +77,11 @@ const SockerServer = (server) => {
                     message: message.message
                 }
 
-                await Message.create(msg)
+                const savedMessage = await Message.create(msg)
 
                 message.User = message.fromUser
-                message,fromUserId = message.fromUser.id
+                message.fromUserId = message.fromUser.id
+                message.id = savedMessage.id
                 delete message.fromUser
 
                 sockets.forEach(socket => {
