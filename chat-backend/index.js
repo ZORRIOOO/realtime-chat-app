@@ -16,7 +16,6 @@ app.use(express.static(__dirname + '/uploads'))
 const port = config.appPort
 
 const server = http.createServer(app)
-const SocketServer = require('./socket');
 const SockerServer = require('./socket');
 SockerServer(server)
 

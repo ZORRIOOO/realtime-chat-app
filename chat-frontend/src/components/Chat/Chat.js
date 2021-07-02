@@ -5,7 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import {fetchChats} from '../../store/actions/chat';
 import FriendList from './components/FriendList/FriendList';
 import Messenger from './components/Messenger/Messenger';
-import Friend from './components/Friend/Friend';
+//import Friend from './components/Friend/Friend';
  
 import './Chat.scss';
 
