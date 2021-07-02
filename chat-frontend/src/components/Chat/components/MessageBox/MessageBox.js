@@ -37,7 +37,7 @@ const MessageBox = ({ chat }) => {
                 senderTyping.typing && senderTyping.chatId === chat.id
                 ? <div className='message'>
                     <div className='other-person'>
-                        <p className='m-0'>{senderTyping.fromUser.firstName} {senderTyping.fromUser.lastName}...</p>
+                        <p className='m-0'>{senderTyping.fromUser.firstName} {senderTyping.fromUser.lastName} печатает...</p>
                     </div>
                 </div>
                 : null
