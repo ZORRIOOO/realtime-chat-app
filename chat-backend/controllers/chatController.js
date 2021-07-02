@@ -152,6 +152,14 @@ exports.messages = async (req, res) => {
 
 }
 
+exports.imageUpload = (req, res) => {  
+    if (req.file) {
+        return res.json({ url: req.file.filename })
+    }
+
+    return res.status(500).json('No image uploaded')
+}
+
 exports.deleteChat = async (req, res) => {
 
     try {
