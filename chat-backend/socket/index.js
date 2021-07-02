@@ -88,11 +88,17 @@ const SockerServer = (server) => {
                 sockets.forEach(socket => {
                     io.to(socket).emit('received', message)
                 })
+            } catch (e) { }
+        })
 
-            } catch (e) {
-                
-            }
-
+        socket.on('typing', (message) => {
+            message.toUserId.forEach(id => {
+                if (users.has(id)) {
+                    users.get(id).sockets.forEach(socket => {
+                        io.to(socket).emit('typing', message)
+                    })
+                }
+            })
         })
 
         socket.on('disconnect', async () => {
