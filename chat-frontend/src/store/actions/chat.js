@@ -7,7 +7,9 @@ export const FRIEND_OFFLINE = 'FRIEND_OFFLINE'
 export const SET_SOCKET = 'SET_SOCKET'
 export const RECEIVED_MESSAGE = 'RECEIVED_MESSAGE'
 export const SENDER_TYPING = 'SENDER_TYPING'
+// Место для PAGINATE_MESSAGES
 export const INCREMENT_SCROLL = 'INCREMENT_SCROLL'
+export const CREATE_CHAT = 'CREATE_CHAT'
 
 export const fetchChats = () => dispatch => {
     return ChatService.fetchChats()
@@ -57,4 +59,8 @@ export const senderTyping = (sender) => dispatch => {
 
 export const incrementScroll = () => dispatch => {
     dispatch({ type: INCREMENT_SCROLL })
+}
+
+export const createChat = (chat) => dispatch => {
+    dispatch({ type: CREATE_CHAT, payload: chat })
 }

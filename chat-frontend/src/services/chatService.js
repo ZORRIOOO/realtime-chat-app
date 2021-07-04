@@ -38,6 +38,16 @@ const ChatService = {
             .catch(err => {
                 throw err
             })
+    },
+
+    createChat: (partnerId) => {
+        return API.post('/chats/create', {partnerId})
+            .then(({ data }) => {
+                return data
+            })
+            .catch(err => {
+                throw err
+            })
     }
 
 }
