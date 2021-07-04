@@ -1,4 +1,4 @@
-import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING } from '../actions/chat';
+import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING, INCREMENT_SCROLL } from '../actions/chat';
 
 const initialState = {
     chats: [],
@@ -11,7 +11,7 @@ const initialState = {
 
 const chatReducer = (state = initialState, action) => {
 
-    const {type, payload} = action
+    const { type, payload } = action
 
     switch (type) {
 
@@ -26,7 +26,7 @@ const chatReducer = (state = initialState, action) => {
                 ...state,
                 currentChat: payload,
                 scrollBottom: state.scrollBottom + 1,
-                newMessage: {chatId: null, seen: null}
+                newMessage: { chatId: null, seen: null }
             }    
 
         case FRIENDS_ONLINE: {
@@ -140,6 +140,7 @@ const chatReducer = (state = initialState, action) => {
 
             const chatsCopy = state.chats.map(chat => {
                 if (message.chatId === chat.id) {
+
                     if (message.User.id === userId) {
                         scrollBottom++
                     } else {
@@ -202,12 +203,19 @@ const chatReducer = (state = initialState, action) => {
                 senderTyping: payload,
             }
         }
-               
+
+        case INCREMENT_SCROLL: {
+            return {
+                ...state,
+                scrollBottom: state.scrollBottom + 1,
+                newMessage: { chatId: null, seen: true }
+            }
+        }
+
         default: {
             return state
-            }
+        }
     }
-
 }
 
 export default chatReducer

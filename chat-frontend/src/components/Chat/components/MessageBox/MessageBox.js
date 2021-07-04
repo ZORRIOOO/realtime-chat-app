@@ -10,15 +10,18 @@ const MessageBox = ({ chat }) => {
     const senderTyping = useSelector(state => state.chatReducer.senderTyping)
     const msgBox = useRef()
 
+    const scrollManual = (value) => {
+        msgBox.current.scrollTop = value
+    }
+
+    // Порядок методов, которые были пропущены из-за ошибки с ключами: scrollTop, senderTyping, scrollBottom
+    // Также нужно будут убрать Math.ceil из senderTyping
+
     useEffect(() => {
         setTimeout(() => {
             scrollManual(msgBox.current.scrollHeight)
         }, 100)
     }, [scrollBottom])
-
-    const scrollManual = (value) => {
-        msgBox.current.scrollTop = value
-    }
 
     return (
         <div id='msg-box' ref={msgBox}>
@@ -35,12 +38,12 @@ const MessageBox = ({ chat }) => {
             }
             {
                 senderTyping.typing && senderTyping.chatId === chat.id
-                ? <div className='message'>
-                    <div className='other-person'>
-                        <p className='m-0'>{senderTyping.fromUser.firstName} {senderTyping.fromUser.lastName} печатает...</p>
+                    ? <div className='message'>
+                        <div className='other-person'>
+                            <p className='m-0'>{senderTyping.fromUser.firstName} {senderTyping.fromUser.lastName} печатает...</p>
+                        </div>
                     </div>
-                </div>
-                : null
+                    : null
             }
         </div>
     )

@@ -4,12 +4,12 @@ const ChatService = {
 
     fetchChats: () => {
         return API.get('/chats')
-        .then(({data}) => {
-            return data
-        })
-        .catch(err => {
-            throw err
-        })
+            .then(({ data }) => {
+                return data
+            })
+            .catch(err => {
+                throw err
+            })
     },
 
     uploadImage: (data) => {
@@ -24,7 +24,7 @@ const ChatService = {
             .catch(err => {
                 throw err
             })
-    }     
+    }
 
 }
 
