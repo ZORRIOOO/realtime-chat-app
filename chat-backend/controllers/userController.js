@@ -35,10 +35,10 @@ exports.update = async (req, res) => {
 exports.search = async (req, res) => {
 
     try {
-        
+
         const users = await User.findAll({
             where: {
-                [sequelize.Op.Or]: {
+                [sequelize.Op.or]: {
                     namesConcated: sequelize.where(
                         sequelize.fn('concat', sequelize.col('firstName'), ' ', sequelize.col('lastName')),
                         {
@@ -51,9 +51,9 @@ exports.search = async (req, res) => {
                 },
                 [sequelize.Op.not]: {
                     id: req.user.id
-                },
-                limit: 10
-            }
+                }
+            },
+            limit: 10
         })
 
         return res.json(users)

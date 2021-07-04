@@ -8,4 +8,4 @@ const {userFile} = require('../middleware/fileUpload')
 router.post('/update', [auth, userFile, updateRules, validate], update)
 router.get('/search-users', auth, search)
 
-module.exports = router
+module.exports = router 

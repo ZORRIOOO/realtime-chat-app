@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Friend from '../Friend/Friend';
 import { setCurrentChat } from '../../../../store/actions/chat';
 import Modal from '../../../Modal/Modal';
+import ChatService from '../../../../services/chatService';
 import './FriendList.scss';
 
 const FriendList = () => {
@@ -18,7 +19,8 @@ const FriendList = () => {
     }
 
     const searchFriends = (e) => {
-        // chat service
+        ChatService.searchUsers(e.target.value)
+            .then(res => setSuggestions(res))
     }
 
     const addNewFriend = (id) => {
@@ -29,7 +31,7 @@ const FriendList = () => {
         <div id='friends' className='shadow-light'>
             <div id='title'>
                 <h3 className='m-0'>Друзья</h3>
-                <button>Новые</button>
+                <button onClick={() => setShowFriendsModal(true)}>Новые</button>
             </div>
 
             <hr />
@@ -38,14 +40,14 @@ const FriendList = () => {
                 {
                     chats.length > 0
                     ? chats.map(chat => {
-                        return <Friend click={() => openChat(chat )} chat={chat} key={chat.id}/>
+                        return <Friend click={() => openChat(chat)} chat={chat} key={chat.id}/>
                     })
                     : <p id='no-chat'>У тебя нет друзей</p>
                 }
             </div>
             {
                 showFriendsModal &&
-                <Modal>
+                <Modal click={() => setShowFriendsModal(false)}>
                     <Fragment key='header'>
                         <h3 className='m-0'>Создать новый чат</h3>
                     </Fragment>
@@ -55,12 +57,12 @@ const FriendList = () => {
                         <input 
                             onInput={e => searchFriends(e)}
                             type='text'
-                            placeholder='Найти'
+                            placeholder='Поиск...'
                         />
                         <div id='suggestions'>
                             {
                                 suggestions.map(user => {
-                                    return <div className='suggestion'>
+                                    return <div key={user.id} className='suggestion'>
                                         <p className='m-0'>{user.firstName} {user.lastName}</p>
                                         <button onClick={() => addNewFriend(user.id)}>Добавить</button>
                                     </div>
