@@ -41,7 +41,17 @@ const ChatService = {
     },
 
     createChat: (partnerId) => {
-        return API.post('/chats/create', {partnerId})
+        return API.post('/chats/create', { partnerId })
+            .then(({ data }) => {
+                return data
+            })
+            .catch(err => {
+                throw err
+            })
+    },
+
+    addFriendToGroupChat: (userId, chatId) => {
+        return API.post('/chats/add-user-to-group', { userId, chatId })
             .then(({ data }) => {
                 return data
             })

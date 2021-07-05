@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { userStatus } from '../../../../utils/helpers';
-import './ChatHeader.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
+import Modal from '../../../Modal/Modal';
+import ChatService from '../../../../services/chatService';
+import './ChatHeader.scss';
 
 const ChatHeader = ({chat}) => {
 
@@ -9,6 +12,22 @@ const ChatHeader = ({chat}) => {
     const [showAddFriendModal, setShowAddFriendModal] = useState(false)
     const [showLeaveChatModal, setShowLeaveChatModal] = useState(false)
     const [showDeleteChatModal, setShowDeleteChatModal] = useState(false)
+    const [suggestions, setSuggestions] = useState([])
+
+    const socket = useSelector(state => state.chatReducer.socket)
+
+    const searchFriends = (e) => {
+        ChatService.searchUsers(e.target.value)
+            .then(res => setSuggestions(res))
+    }
+
+    const addNewFriend = (id) => {
+        ChatService.addFriendToGroupChat(id, chat.id)
+            .then(data => {
+                socket.emit('add-user-to-group', data)
+                setShowAddFriendModal(false)
+            }).catch(err => console.log(err))
+    }
 
     return (
         <Fragment>
@@ -32,7 +51,7 @@ const ChatHeader = ({chat}) => {
             {
                 showChatOptions
                 ? <div id='settings'>
-                    <div>
+                    <div onClick={() => setShowAddFriendModal(true)}>
                         <FontAwesomeIcon 
                             icon={['fas', 'user-plus']}
                             className='fa-icon'
@@ -61,6 +80,33 @@ const ChatHeader = ({chat}) => {
                     </div>
                 </div>
                 : null
+            }
+            {
+                showAddFriendModal &&
+                <Modal click={() => setShowAddFriendModal(false)}>
+                    <Fragment key='header'>
+                        <h3 className='m-0'>Добавить друга в чат</h3>
+                    </Fragment>
+
+                    <Fragment key='body'>
+                        <p>Найти друга:</p>
+                        <input 
+                            onInput={e => searchFriends(e)}
+                            type='text'
+                            placeholder='Поиск...'
+                        />
+                        <div id='suggestions'>
+                            {
+                                suggestions.map(user => {
+                                    return <div key={user.id} className='suggestion'>
+                                        <p className='m-0'>{user.firstName} {user.lastName}</p>
+                                        <button onClick={() => addNewFriend(user.id)}>Добавить</button>
+                                    </div>
+                                })
+                            }
+                        </div>
+                    </Fragment>
+                </Modal>
             }
         </Fragment>
     )
