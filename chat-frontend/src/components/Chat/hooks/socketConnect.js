@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
-import { fetchChats, onlineFriends, onlineFriend, offlineFriend, setSocket, receivedMessage, senderTyping, createChat, addUserToGroup } from '../../../store/actions/chat';
+import { fetchChats, onlineFriends, onlineFriend, offlineFriend, setSocket, receivedMessage, senderTyping, createChat, addUserToGroup, leaveCurrentChat } from '../../../store/actions/chat';
 
 function useSocket (user, dispatch) {
 
@@ -44,6 +44,11 @@ function useSocket (user, dispatch) {
 
             socket.on('added-user-to-group', (group) => {
                 dispatch(addUserToGroup(group))
+            })
+
+            socket.on('remove-user-from-chat', (data) => {
+                data.currentUserId = user.id
+                dispatch(leaveCurrentChat(data))
             })
             
             console.log(res)

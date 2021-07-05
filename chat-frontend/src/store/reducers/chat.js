@@ -1,4 +1,4 @@
-import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING, INCREMENT_SCROLL, CREATE_CHAT, ADD_USER_TO_GROUP } from '../actions/chat';
+import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING, INCREMENT_SCROLL, CREATE_CHAT, ADD_USER_TO_GROUP, LEAVE_CURRENT_CHAT } from '../actions/chat';
 
 const initialState = {
     chats: [],
@@ -259,6 +259,47 @@ const chatReducer = (state = initialState, action) => {
                 currentChat: currentChatCopy
             }
 
+        }
+
+        case LEAVE_CURRENT_CHAT: {
+            const {chatId, userId, currentUserId} = payload
+
+            if (userId === currentUserId) {
+
+                const chatsCopy = state.chats.filter(chat => chat.id !== chatId)
+
+                return {
+                    ...state,
+                    chats: chatsCopy,
+                    currentChat: state.currentChat.id === chatId ? {} : state.currentChat
+                }
+            } else {
+
+                const chatsCopy = state.chats.map(chat => {
+                    if (chatId === chat.id) {
+                        return {
+                            ...chat,
+                            Users: chat.Users.filter(user => user.id !== userId)
+                        }
+                    }
+
+                    return chat
+                })
+
+                let currentChatCopy = {...state.currentChat}
+                if (currentChatCopy.id === chatId) {
+                    currentChatCopy = {
+                        ...currentChatCopy,
+                        Users: currentChatCopy.Users.filter(user => user.id !== userId)
+                    }
+                }
+                
+                return {
+                    ...state,
+                    chats: chatsCopy,
+                    currentChat: currentChatCopy
+                }
+            }
         }
 
         default: {

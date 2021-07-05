@@ -11,6 +11,7 @@ export const SENDER_TYPING = 'SENDER_TYPING'
 export const INCREMENT_SCROLL = 'INCREMENT_SCROLL'
 export const CREATE_CHAT = 'CREATE_CHAT'
 export const ADD_USER_TO_GROUP = 'ADD_USER_TO_GROUP'
+export const LEAVE_CURRENT_CHAT = 'LEAVE_CURRENT_CHAT'
 
 export const fetchChats = () => dispatch => {
     return ChatService.fetchChats()
@@ -68,4 +69,8 @@ export const createChat = (chat) => dispatch => {
 
 export const addUserToGroup = (group) => dispatch => {
     dispatch({ type: ADD_USER_TO_GROUP, payload: group })
+}
+
+export const leaveCurrentChat = (data) => dispatch => {
+    dispatch({ type: LEAVE_CURRENT_CHAT, payload: data })
 }

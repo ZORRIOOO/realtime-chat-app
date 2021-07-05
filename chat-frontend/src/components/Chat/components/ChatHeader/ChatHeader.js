@@ -29,6 +29,14 @@ const ChatHeader = ({chat}) => {
             }).catch(err => console.log(err))
     }
 
+    const leaveChat = () => {
+        ChatService.leaveCurrentChat(chat.id)
+            .then(data => {
+                socket.emit('leave-current-chat', data)
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <Fragment>
             <div id='chatter'>
@@ -61,7 +69,7 @@ const ChatHeader = ({chat}) => {
 
                     {
                         chat.type === 'group'
-                            ? <div>
+                            ? <div onClick={() => leaveChat()}>
                                 <FontAwesomeIcon 
                                     icon={['fas', 'sign-out-alt']}
                                     className='fa-icon'
