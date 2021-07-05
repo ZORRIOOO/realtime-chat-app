@@ -1,4 +1,4 @@
-import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING, INCREMENT_SCROLL, CREATE_CHAT, ADD_USER_TO_GROUP, LEAVE_CURRENT_CHAT } from '../actions/chat';
+import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING, INCREMENT_SCROLL, CREATE_CHAT, ADD_USER_TO_GROUP, LEAVE_CURRENT_CHAT, DELETE_CURRENT_CHAT } from '../actions/chat';
 
 const initialState = {
     chats: [],
@@ -299,6 +299,14 @@ const chatReducer = (state = initialState, action) => {
                     chats: chatsCopy,
                     currentChat: currentChatCopy
                 }
+            }
+        }
+
+        case DELETE_CURRENT_CHAT: {
+            return {
+                ...state,
+                chats: state.chats.filter(chat => chat.id !== payload),
+                currentChat: state.currentChat.id === payload ? {} : state.currentChat
             }
         }
 

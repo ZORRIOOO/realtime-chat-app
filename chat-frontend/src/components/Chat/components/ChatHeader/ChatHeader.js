@@ -10,8 +10,8 @@ const ChatHeader = ({chat}) => {
 
     const [showChatOptions, setShowChatOptions] = useState(false)
     const [showAddFriendModal, setShowAddFriendModal] = useState(false)
-    const [showLeaveChatModal, setShowLeaveChatModal] = useState(false)
-    const [showDeleteChatModal, setShowDeleteChatModal] = useState(false)
+    //const [showLeaveChatModal, setShowLeaveChatModal] = useState(false)
+    //const [showDeleteChatModal, setShowDeleteChatModal] = useState(false)
     const [suggestions, setSuggestions] = useState([])
 
     const socket = useSelector(state => state.chatReducer.socket)
@@ -35,6 +35,13 @@ const ChatHeader = ({chat}) => {
                 socket.emit('leave-current-chat', data)
             })
             .catch(err => console.log(err))
+    }
+ 
+    const deleteChat = () => {
+        ChatService.deleteCurrentChat(chat.id)
+            .then(data => {
+                socket.emit('delete-chat', data)
+            })
     }
 
     return (
@@ -79,13 +86,17 @@ const ChatHeader = ({chat}) => {
                             : null
                     }
 
-                    <div>
-                        <FontAwesomeIcon 
-                            icon={['fas', 'trash']}
-                            className='fa-icon'
-                        />
-                        <p>Удалить чат</p>
-                    </div>
+                    {
+                        chat.type === 'dual' ?
+                            <div onClick={() => deleteChat()}>
+                                <FontAwesomeIcon 
+                                    icon={['fas', 'trash']}
+                                    className='fa-icon'
+                                />
+                                <p>Удалить чат</p>
+                            </div>
+                            : null
+                    }
                 </div>
                 : null
             }
