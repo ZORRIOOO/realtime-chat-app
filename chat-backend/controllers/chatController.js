@@ -7,6 +7,7 @@ const { Op } = require('sequelize');
 const { sequelize } = require('../models');
 
 exports.index = async (req, res) => {
+    
     const user = await User.findOne({
         where: {
             id: req.user.id
@@ -161,7 +162,8 @@ exports.messages = async (req, res) => {
             }
         ],
         limit,
-        offset
+        offset,
+        order: [['id', 'DESC']]
     })
 
     const totalPages = Math.ceil(messages.count / limit)

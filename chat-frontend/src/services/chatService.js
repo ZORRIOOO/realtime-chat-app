@@ -26,6 +26,20 @@ const ChatService = {
             })
     },
 
+    paginateMessages: (id, page) => {
+        return API.get('/chats/messages', {
+            params: {
+                id, page
+            }
+        })
+            .then(({ data }) => {
+                return data
+            })
+            .catch(err => {
+                throw err
+            })
+    },
+
     searchUsers: (term) => {
         return API.get('/users/search-users', {
             params: {

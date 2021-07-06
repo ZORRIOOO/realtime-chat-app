@@ -1,4 +1,4 @@
-import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING, INCREMENT_SCROLL, CREATE_CHAT, ADD_USER_TO_GROUP, LEAVE_CURRENT_CHAT, DELETE_CURRENT_CHAT } from '../actions/chat';
+import { FETCH_CHATS, SET_CURRENT_CHAT, FRIENDS_ONLINE, FRIEND_ONLINE, FRIEND_OFFLINE, SET_SOCKET, RECEIVED_MESSAGE, SENDER_TYPING, PAGINATE_MESSAGES, INCREMENT_SCROLL, CREATE_CHAT, ADD_USER_TO_GROUP, LEAVE_CURRENT_CHAT, DELETE_CURRENT_CHAT } from '../actions/chat';
 
 const initialState = {
     chats: [],
@@ -201,6 +201,38 @@ const chatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 senderTyping: payload,
+            }
+        }
+
+        case PAGINATE_MESSAGES: {
+            const {messages, id, pagination} = payload
+
+            let currentChatCopy = {...state.currentChat}
+
+            const chatsCopy = state.chats.map(chat => {
+                if (chat.id === id) {
+                    const shifted = [...messages, ...chat.Messages]
+
+                    currentChatCopy = {
+                        ...currentChatCopy,
+                        Messages: shifted,
+                        Pagination: pagination
+                    }
+
+                    return {
+                        ...chat,
+                        Messages: shifted,
+                        Pagination: pagination
+                    }
+                }
+
+                return chat
+            })
+
+            return {
+                ...state,
+                chats: chatsCopy,
+                currentChat: currentChatCopy
             }
         }
 

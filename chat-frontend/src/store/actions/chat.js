@@ -7,7 +7,7 @@ export const FRIEND_OFFLINE = 'FRIEND_OFFLINE'
 export const SET_SOCKET = 'SET_SOCKET'
 export const RECEIVED_MESSAGE = 'RECEIVED_MESSAGE'
 export const SENDER_TYPING = 'SENDER_TYPING'
-// Место для PAGINATE_MESSAGES
+export const PAGINATE_MESSAGES = 'PAGINATE_MESSAGES'
 export const INCREMENT_SCROLL = 'INCREMENT_SCROLL'
 export const CREATE_CHAT = 'CREATE_CHAT'
 export const ADD_USER_TO_GROUP = 'ADD_USER_TO_GROUP'
@@ -58,6 +58,25 @@ export const receivedMessage = (message, userId) => dispatch => {
 
 export const senderTyping = (sender) => dispatch => {
     dispatch({ type: SENDER_TYPING, payload: sender })
+}
+
+export const paginateMessages = (id, page) => dispatch => {
+    return ChatService.paginateMessages(id, page)
+    .then(({ messages, pagination }) => {
+      
+        if (typeof messages !== 'undefined' && messages.length > 0) {
+            messages.reverse()
+            const payload = { messages, id, pagination }
+            dispatch({ type: PAGINATE_MESSAGES, payload })
+            return true
+        }
+
+        return false
+    })
+    .catch(err => {
+        throw err
+    })
+
 }
 
 export const incrementScroll = () => dispatch => {
