@@ -173,6 +173,7 @@ const MessageInput = ({ chat }) => {
                             ? <Picker 
                                 title='Выберите...'
                                 emoji='point_up'
+                                color='#647C90'
                                 style={{position: 'absolute', bottom: '20px', right: '20px'}}
                                 onSelect={selectEmoji}
                             />
