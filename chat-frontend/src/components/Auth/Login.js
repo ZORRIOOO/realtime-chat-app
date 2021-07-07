@@ -13,7 +13,7 @@ const Login = ({ history }) => {
 
     const dispatch = useDispatch()
 
-    const [email, setEmail] = useState('john.cutie@gmail.com')
+    const [email, setEmail] = useState('konstantin.mamonov@gmail.com')
     const [password, setPassword] = useState('password')
     
     const submitForm = (e) => {
